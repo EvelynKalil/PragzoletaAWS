@@ -1,0 +1,46 @@
+
+@use './base/reset';
+@use './layout/breakpoints';
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #fff;
+  color: #222;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 1px;
+}
+
+strong {
+  font-family: 'Alfa Slab One', cursive;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input {
+  border: none;
+  outline: none;
+  font-family: inherit;
+}

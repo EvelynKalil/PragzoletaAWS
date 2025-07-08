@@ -1,0 +1,68 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+
+  &__intro {
+    text-align: center;
+    max-width: 500px;
+  }
+
+  &__eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 2.6rem;
+    color: #d62828;
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  &__image img {
+    max-width: 550px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    text-align: left;
+
+    &__intro {
+      text-align: left;
+      width: 50%;
+    }
+
+    &__image {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
