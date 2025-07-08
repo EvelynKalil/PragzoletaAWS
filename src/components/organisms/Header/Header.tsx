@@ -4,10 +4,14 @@ import { Button } from '../../atoms/Button/Button'
 import { LoginModal } from '../../organisms/LoginModal/LoginModal'
 import { UserBadge } from '../../atoms/UserBadge/UserBadge'
 import logo from '../../../assets/logo.png'
+import { RegisterModal } from '../../organisms/RegisterModal/RegisterModal'
+
 
 export const Header = () => {
   const [user, setUser] = useState<string | null>(null)
   const [showLogin, setShowLogin] = useState(false)
+  const [showRegister, setShowRegister] = useState(false)
+
 
   return (
     <header className={styles.header}>
@@ -23,7 +27,11 @@ export const Header = () => {
       {user ? (
         <UserBadge name={user} />
       ) : (
-        <Button text="Iniciar sesión" onClick={() => setShowLogin(true)} />
+        <div className={styles.header__actions}>
+          <Button text="Iniciar sesión" onClick={() => setShowLogin(true)} />
+          <Button text="Registrarse" onClick={() => setShowRegister(true)} />
+        </div>
+
       )}
 
       {showLogin && (
@@ -35,6 +43,12 @@ export const Header = () => {
           }}
         />
       )}
+      {showRegister && (
+        <RegisterModal
+          onClose={() => setShowRegister(false)}
+        />
+      )}
+
     </header>
   )
 }
