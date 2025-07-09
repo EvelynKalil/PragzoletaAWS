@@ -6,6 +6,10 @@ trigger:
 pool:
   name: Default
 
+variables:
+  AWS_REGION: 'us-east-1'
+  S3_BUCKET: 'pragzoleta-deploy-manual'
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -18,17 +22,15 @@ steps:
     npm run build
   displayName: 'Compilar proyecto (tsc + vite)'
 
-- task: AWSCLI@1
-  inputs:
-    awsCredentials: 'AWS-S3-Deploy'
-    awsRegion: 'us-east-1'
-    awsCommand: 's3'
-    awsSubCommand: 'ls'
-    awsArguments: 's3://pragzoleta-deploy-manual'
-  displayName: 'Verificar acceso a S3'
-
+- script: |
+    cd $(Build.SourcesDirectory)
+    dir dist
+  displayName: 'Verificar contenido de dist/'
 
 - script: |
     cd $(Build.SourcesDirectory)
-    aws s3 sync s3://pragzoleta-deploy-manual/ --delete
+    aws s3 sync dist/ s3://$(S3_BUCKET) --region $(AWS_REGION) --delete
+  env:
+    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
   displayName: 'Subir frontend a S3'
