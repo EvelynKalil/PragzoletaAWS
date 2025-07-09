@@ -1,0 +1,26 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Instalar Node.js'
+
+- script: |
+    npm ci
+    npm run build
+  displayName: 'Compilar proyecto'
+
+- task: AWSCLI@1
+  inputs:
+    awsCredentials: 'AWS-S3-Deploy'
+    awsRegion: 'us-east-1'
+    command: 's3'
+    arguments: 'sync dist/ s3://pragzoleta-deploy-manual/ --delete'
+  displayName: 'Subir a S3'
