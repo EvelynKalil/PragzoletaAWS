@@ -2,14 +2,16 @@ trigger:
   branches:
     include:
       - main
+
 pool:
   name: Default
+
 variables:
 - group: AWS Secrets
 - name: AWS_REGION
   value: 'us-east-1'
 - name: BUCKET_NAME
-  value: 'pragzoleta-deploy-manual '
+  value: 'pragzoleta-deploy-manual'
 steps:
   - task: NodeTool@0
     inputs:
