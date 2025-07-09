@@ -27,12 +27,8 @@ steps:
     awsArguments: 's3://pragzoleta-deploy-manual'
   displayName: 'Verificar acceso a S3'
 
-- script: |
-    cd $(Build.SourcesDirectory)
-    dir dist
-  displayName: 'Verificar contenido de dist/'
 
 - script: |
     cd $(Build.SourcesDirectory)
-    aws s3 sync dist/ s3://pragzoleta-deploy-manual/ --delete
+    aws s3 sync s3://pragzoleta-deploy-manual/ --delete
   displayName: 'Subir frontend a S3'
