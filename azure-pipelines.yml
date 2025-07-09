@@ -2,35 +2,28 @@ trigger:
   branches:
     include:
       - main
-
 pool:
   name: Default
-
 variables:
-  AWS_REGION: 'us-east-1'
-  S3_BUCKET: 'pragzoleta-deploy-manual'
-
+- group: AWS Secrets
+- name: AWS_REGION
+  value: 'us-east-1'
+- name: BUCKET_NAME
+  value: 'pragzoleta-deploy-manual '
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.19.0'
-  displayName: 'Instalar Node.js 20.19.0'
-
-- script: |
-    cd $(Build.SourcesDirectory)
-    npm ci
-    npm run build
-  displayName: 'Compilar proyecto (tsc + vite)'
-
-- script: |
-    cd $(Build.SourcesDirectory)
-    dir dist
-  displayName: 'Verificar contenido de dist/'
-
-- script: |
-    cd $(Build.SourcesDirectory)
-    aws s3 sync dist/ s3://$(S3_BUCKET) --region $(AWS_REGION) --delete
-  env:
-    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-  displayName: 'Subir frontend a S3'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'Build Vite App'
+  - script: |
+      pip install awscli --upgrade --user
+      export PATH=$PATH:$HOME/.local/bin
+      aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+      aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+      aws configure set default.region "$AWS_REGION"
+      aws s3 sync dist/ s3://$BUCKET_NAME --delete
+    displayName: 'Upload to S3 via CLI'
