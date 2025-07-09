@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pragzoletaaws-dev-4d5aa-authRole",
+      "UnauthRoleArn": "arn:aws:iam::221889532284:role/amplify-pragzoletaaws-dev-4d5aa-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::221889532284:role/amplify-pragzoletaaws-dev-4d5aa-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pragzoletaaws-dev-4d5aa-deployment",
+      "UnauthRoleName": "amplify-pragzoletaaws-dev-4d5aa-unauthRole",
+      "StackName": "amplify-pragzoletaaws-dev-4d5aa",
+      "StackId": "arn:aws:cloudformation:us-east-2:221889532284:stack/amplify-pragzoletaaws-dev-4d5aa/1931b1d0-5c58-11f0-911e-06f40c96f9f3",
+      "AmplifyAppId": "d23v5goznn5xj"
+    },
+    "categories": {
+      "function": {
+        "authPlazoletaPostConfirmation": {
+          "GROUP": "admin"
+        }
+      },
+      "auth": {
+        "PlazoletaAuth": {}
+      }
+    }
+  }
+}

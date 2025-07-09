@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import { RegisterForm } from '../../molecules/RegisterForm/RegisterForm'
 import styles from './RegisterModal.module.scss'
 
 type Props = {
   onClose: () => void
+  onRegister: (username: string) => void
 }
 
-export const RegisterModal = ({ onClose }: Props) => {
+export const RegisterModal = ({ onClose, onRegister }: Props) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -20,7 +21,7 @@ export const RegisterModal = ({ onClose }: Props) => {
       <div className={styles.modal}>
         <button className={styles.close} onClick={onClose} aria-label="Cerrar">×</button>
         <p className={styles.title}>Registro</p>
-        <RegisterForm onRegister={onClose} />
+        <RegisterForm onRegister={onRegister} />
       </div>
     </div>
   )

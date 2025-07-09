@@ -1,14 +1,3 @@
-.login-modal__title {
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    color: #888;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-
 .overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -27,6 +16,16 @@
   max-width: 400px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   position: relative;
+}
+
+.login-modal__title {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .close {
@@ -52,4 +51,14 @@
   outline: none;
   background: none;
   box-shadow: none;
+}
+.title {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
 }

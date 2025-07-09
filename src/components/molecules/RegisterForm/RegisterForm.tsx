@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { signUp } from 'aws-amplify/auth';
+import { signUp } from 'aws-amplify/auth'
+import { Input } from '../../atoms/Input/Input'
+import { Button } from '../../atoms/Button/Button'
 import styles from './RegisterForm.module.scss'
+import { ConfirmSignUpForm } from '../ConfirmSignUpForm/ConfirmSignUpForm'
 
 type Props = {
   onRegister: (username: string) => void
@@ -13,46 +16,51 @@ export const RegisterForm = ({ onRegister }: Props) => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  setLoading(true)
-  setError('')
-  try {
-    await signUp({
-      username,
-      password,
-      options: {
-        userAttributes: {
-          email,
+  const [showCodeConfirmation, setShowCodeConfirmation] = useState(false)
+  const [submittedUsername, setSubmittedUsername] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      await signUp({
+        username,
+        password,
+        options: {
+          userAttributes: { email },
         },
-      },
-    })
-    onRegister(username)
-  } catch (err: any) {
-    setError(err.message || 'Error al registrar')
-  } finally {
-    setLoading(false)
+      })
+      setSubmittedUsername(username)
+      setShowCodeConfirmation(true)
+    } catch (err: any) {
+      setError(err.message || 'Error al registrar')
+    } finally {
+      setLoading(false)
+    }
   }
-}
 
-
-  return (
+  return showCodeConfirmation ? (
+    <ConfirmSignUpForm
+      username={submittedUsername}
+      onConfirmed={() => onRegister(submittedUsername)}
+    />
+  ) : (
     <form className={styles.registerForm} onSubmit={handleSubmit}>
-      <input
-        type="text"
+      <Input
         placeholder="Nombre de usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
       />
-      <input
+      <Input
         type="email"
         placeholder="Correo electrónico"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <input
+      <Input
         type="password"
         placeholder="Contraseña"
         value={password}
@@ -60,9 +68,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         required
       />
       {error && <p className={styles.registerForm__error}>{error}</p>}
-      <button type="submit" disabled={loading}>
-        {loading ? 'Registrando...' : 'Registrarse'}
-      </button>
+      <Button text={loading ? 'Registrando...' : 'Registrarse'} type="submit" disabled={loading} />
     </form>
   )
 }

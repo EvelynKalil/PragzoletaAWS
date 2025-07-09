@@ -1,22 +1,20 @@
 import styles from './Button.module.scss'
 
-type ButtonProps = {
+type Props = {
   text: string
   onClick?: () => void
-  type?: 'button' | 'submit' | 'reset'
-  variant?: 'primary' | 'secondary'
+  type?: 'button' | 'submit'
+  disabled?: boolean
 }
 
-export const Button = ({
-  text,
-  onClick,
-  type = 'button',
-  variant = 'primary',
-}: ButtonProps) => {
-  const className = `${styles.button} ${styles[`button--${variant}`]}`
-
+export const Button = ({ text, onClick, type = 'button', disabled = false }: Props) => {
   return (
-    <button type={type} className={className} onClick={onClick}>
+    <button
+      className={styles.button}
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
       {text}
     </button>
   )

@@ -23,9 +23,15 @@
       object-fit: contain;
     }
   }
-  
+
   &__actions {
       display: flex;
       gap: 0.75rem;
     }
+}
+
+.header__userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
 }
