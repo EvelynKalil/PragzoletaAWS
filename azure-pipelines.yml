@@ -15,7 +15,7 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)
     npm ci
-    npm run build
+    vite build
   displayName: 'Compilar proyecto'
 
 - task: AWSCLI@1
