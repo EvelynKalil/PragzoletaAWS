@@ -23,7 +23,7 @@ steps:
     awsRegion: 'us-east-1'
     awsCommand: 's3'
     awsSubCommand: 'ls'
-    awsArguments: ''
+    awsArguments: 's3://pragzoleta-deploy-manual'
   displayName: 'Configurar credenciales AWS'
 
 - script: |
