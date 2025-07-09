@@ -13,6 +13,7 @@ steps:
   displayName: 'Instalar Node.js'
 
 - script: |
+    cd $(Build.SourcesDirectory)
     npm ci
     npm run build
   displayName: 'Compilar proyecto'
@@ -27,6 +28,6 @@ steps:
   displayName: 'Configurar credenciales AWS'
 
 - script: |
+    cd $(Build.SourcesDirectory)
     aws s3 sync dist/ s3://pragzoleta-deploy-manual/ --delete
   displayName: 'Subir a S3'
-
