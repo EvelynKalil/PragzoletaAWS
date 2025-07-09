@@ -29,5 +29,10 @@ steps:
 
 - script: |
     cd $(Build.SourcesDirectory)
+    dir dist
+  displayName: 'Verificar contenido de dist/'
+
+- script: |
+    cd $(Build.SourcesDirectory)
     aws s3 sync dist/ s3://pragzoleta-deploy-manual/ --delete
   displayName: 'Subir a S3'
