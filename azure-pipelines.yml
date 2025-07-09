@@ -15,8 +15,8 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)
     npm ci
-    npx vite build
-  displayName: 'Compilar proyecto'
+    npm run build
+  displayName: 'Compilar proyecto (tsc + vite)'
 
 - task: AWSCLI@1
   inputs:
@@ -25,7 +25,7 @@ steps:
     awsCommand: 's3'
     awsSubCommand: 'ls'
     awsArguments: 's3://pragzoleta-deploy-manual'
-  displayName: 'Configurar credenciales AWS'
+  displayName: 'Verificar acceso a S3'
 
 - script: |
     cd $(Build.SourcesDirectory)
@@ -35,4 +35,4 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)
     aws s3 sync dist/ s3://pragzoleta-deploy-manual/ --delete
-  displayName: 'Subir a S3'
+  displayName: 'Subir frontend a S3'
