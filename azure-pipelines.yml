@@ -4,7 +4,7 @@ trigger:
       - main
 
 pool:
-  name: Default
+  name: Default  # Agente self-hosted en Windows
 
 variables:
 - group: AWS Secrets
@@ -17,24 +17,21 @@ steps:
   - task: NodeTool@0
     inputs:
       versionSpec: '20.x'
-    displayName: 'Install Node.js'
+    displayName: 'Instalar Node.js'
 
   - script: |
-      npm ci
-      npm run build
-      dir dist
-    displayName: 'Build Vite App y mostrar dist/'
+      call npm install
+      call npm run build
+    displayName: 'Compilar Vite (Windows)'
 
   - powershell: |
       Invoke-WebRequest "https://awscli.amazonaws.com/AWSCLIV2.msi" -OutFile "AWSCLIV2.msi"
       Start-Process msiexec.exe -Wait -ArgumentList '/i AWSCLIV2.msi /quiet'
-    displayName: 'Instalar AWS CLI en Windows'
+    displayName: 'Instalar AWS CLI (Windows)'
 
   - powershell: |
       $env:AWS_ACCESS_KEY_ID = "$(AWS_ACCESS_KEY_ID)"
       $env:AWS_SECRET_ACCESS_KEY = "$(AWS_SECRET_ACCESS_KEY)"
-      aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
-      aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
-      aws configure set default.region "$(AWS_REGION)"
-      aws s3 sync dist/ s3://$(BUCKET_NAME) --delete
-    displayName: 'Upload a S3 via PowerShell'
+      $env:AWS_REGION = "$(AWS_REGION)"
+      aws s3 sync .\dist\ s3://$(BUCKET_NAME) --region $env:AWS_REGION --delete
+    displayName: 'Subir a S3 (Windows)'
