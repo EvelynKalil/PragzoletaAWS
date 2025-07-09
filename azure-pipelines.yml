@@ -21,6 +21,9 @@ steps:
   inputs:
     awsCredentials: 'AWS-S3-Deploy'
     awsRegion: 'us-east-1'
+    awsCommand: 's3'
+    awsSubCommand: 'ls'
+    awsArguments: ''
   displayName: 'Configurar credenciales AWS'
 
 - script: |
