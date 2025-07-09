@@ -21,7 +21,9 @@ steps:
   inputs:
     awsCredentials: 'AWS-S3-Deploy'
     awsRegion: 'us-east-1'
-    awsCommand: 's3'
-    arguments: 'sync dist/ s3://pragzoleta-deploy-manual/ --delete'
+  displayName: 'Configurar credenciales AWS'
+
+- script: |
+    aws s3 sync dist/ s3://pragzoleta-deploy-manual/ --delete
   displayName: 'Subir a S3'
 
