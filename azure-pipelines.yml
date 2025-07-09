@@ -4,7 +4,7 @@ trigger:
       - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Default
 
 variables:
 - group: AWS Secrets
@@ -12,20 +12,29 @@ variables:
   value: 'us-east-1'
 - name: BUCKET_NAME
   value: 'pragzoleta-deploy-manual'
+
 steps:
   - task: NodeTool@0
     inputs:
       versionSpec: '20.x'
     displayName: 'Install Node.js'
+
   - script: |
-      npm install
+      npm ci
       npm run build
-    displayName: 'Build Vite App'
-  - script: |
-      pip install awscli --upgrade --user
-      export PATH=$PATH:$HOME/.local/bin
-      aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-      aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-      aws configure set default.region "$AWS_REGION"
-      aws s3 sync dist/ s3://$BUCKET_NAME --delete
-    displayName: 'Upload to S3 via CLI'
+      dir dist
+    displayName: 'Build Vite App y mostrar dist/'
+
+  - powershell: |
+      Invoke-WebRequest "https://awscli.amazonaws.com/AWSCLIV2.msi" -OutFile "AWSCLIV2.msi"
+      Start-Process msiexec.exe -Wait -ArgumentList '/i AWSCLIV2.msi /quiet'
+    displayName: 'Instalar AWS CLI en Windows'
+
+  - powershell: |
+      $env:AWS_ACCESS_KEY_ID = "$(AWS_ACCESS_KEY_ID)"
+      $env:AWS_SECRET_ACCESS_KEY = "$(AWS_SECRET_ACCESS_KEY)"
+      aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
+      aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
+      aws configure set default.region "$(AWS_REGION)"
+      aws s3 sync dist/ s3://$(BUCKET_NAME) --delete
+    displayName: 'Upload a S3 via PowerShell'
